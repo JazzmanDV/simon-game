@@ -58,4 +58,8 @@ export default {
 .menu__input:focus-visible {
     box-shadow: var(--primary-box-shadow--hovered);
 }
+
+.menu__input:active {
+    box-shadow: var(--primary-box-shadow);
+}
 </style>

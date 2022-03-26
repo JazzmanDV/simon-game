@@ -39,8 +39,13 @@ export default {
 
 .square:hover,
 .square--active {
-    opacity: 1;
     box-shadow: var(--primary-box-shadow--hovered);
+    opacity: 1;
+}
+
+.square:active {
+    box-shadow: var(--primary-box-shadow);
+    opacity: 0.4;
 }
 
 .square--green {
