@@ -1,60 +1,37 @@
 <template>
     <div class="app">
         <div class="button-set">
-            <div class="button-subset">
-                <button
-                    class="square square--green"
-                    :class="{ 'square--active': squares.green.isActive }"
-                    value="green"
-                    v-on:click="onSquareClick"
-                ></button>
-                <button
-                    class="square square--red"
-                    :class="{ 'square--active': squares.red.isActive }"
-                    value="red"
-                    v-on:click="onSquareClick"
-                ></button>
+            <div class="button-row">
+                <Square color="green" :isActive="squares.green.isActive" :onSquareClick="onSquareClick" />
+                <Square color="red" :isActive="squares.red.isActive" :onSquareClick="onSquareClick" />
             </div>
-            <div class="button-subset">
-                <button
-                    class="square square--yellow"
-                    :class="{ 'square--active': squares.yellow.isActive }"
-                    value="yellow"
-                    v-on:click="onSquareClick"
-                ></button>
-                <button
-                    class="square square--blue"
-                    :class="{ 'square--active': squares.blue.isActive }"
-                    value="blue"
-                    v-on:click="onSquareClick"
-                ></button>
+            <div class="button-row">
+                <Square color="yellow" :isActive="squares.yellow.isActive" :onSquareClick="onSquareClick" />
+                <Square color="blue" :isActive="squares.blue.isActive" :onSquareClick="onSquareClick" />
             </div>
         </div>
 
-        <div class="menu">
-            <div>
-                <h2>Раунд: {{ isGameStarted ? round : "-" }}</h2>
-                <button class="menu__input" :disabled="isGameStarted" v-on:click="onStartButtonClick">Начать</button>
-            </div>
-            <div>
-                <h2>Сложность:</h2>
-                <select class="menu__input" :disabled="isGameStarted" ref="difficultySelect">
-                    <option value="easy">Легкая</option>
-                    <option value="medium">Нормальная</option>
-                    <option value="hard">Сложная</option>
-                </select>
-            </div>
-        </div>
+        <Menu
+            :isGameStarted="isGameStarted"
+            :round="round"
+            :onStartButtonClick="onStartButtonClick"
+            :difficulty="difficulty"
+            :onSelectChange="onSelectChange"
+        />
     </div>
 </template>
 
 <script>
+import Square from "./components/Square.vue";
+import Menu from "./components/Menu.vue";
+
 export default {
     name: "App",
-    components: {},
+    components: { Square, Menu },
     data() {
         return {
             round: 1,
+            difficulty: "easy",
             difficultyDelay: { easy: 1500, medium: 1000, hard: 400 },
             isGameStarted: false,
             isWaitingForAnswer: false,
@@ -69,6 +46,9 @@ export default {
         };
     },
     methods: {
+        onSelectChange(e) {
+            this.difficulty = e.target.value;
+        },
         onSquareClick(e) {
             if (!this.isWaitingForAnswer) {
                 return;
@@ -109,7 +89,7 @@ export default {
                     setTimeout(() => {
                         square.isActive = false;
                         resolve();
-                    }, this.difficultyDelay[this.$refs.difficultySelect.value])
+                    }, this.difficultyDelay[this.difficulty])
                 );
             }
 
@@ -170,7 +150,9 @@ export default {
 body {
     margin: 0;
 }
+</style>
 
+<style scoped>
 .app {
     display: flex;
     flex-wrap: wrap;
@@ -196,77 +178,8 @@ body {
     width: fit-content;
 }
 
-.button-subset {
+.button-row {
     display: flex;
     gap: 0.5rem;
-}
-
-.square {
-    width: 7rem;
-    height: 7rem;
-
-    border: none;
-
-    box-shadow: var(--primary-box-shadow);
-
-    opacity: 0.4;
-
-    cursor: pointer;
-}
-
-.square:hover,
-.square--active {
-    opacity: 1;
-    box-shadow: var(--primary-box-shadow--hovered);
-}
-
-.square--green {
-    border-top-left-radius: 100%;
-    background-color: green;
-}
-
-.square--red {
-    border-top-right-radius: 100%;
-    background-color: red;
-}
-
-.square--yellow {
-    border-bottom-left-radius: 100%;
-    background-color: yellow;
-}
-
-.square--blue {
-    border-bottom-right-radius: 100%;
-    background-color: blue;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.menu__input {
-    font: inherit;
-
-    min-width: 7rem;
-
-    padding: 0.5rem;
-
-    border: none;
-    border-radius: 0.5rem;
-
-    box-shadow: var(--primary-box-shadow);
-
-    outline: none;
-
-    cursor: pointer;
-
-    transition: 0.25s box-shadow;
-}
-
-.menu__input:hover,
-.menu__input:focus-visible {
-    box-shadow: var(--primary-box-shadow--hovered);
 }
 </style>

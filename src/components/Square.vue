@@ -1,8 +1,23 @@
-<template></template>
+<template>
+    <button class="square" :class="getDynamicClass()" :value="color" v-on:click="onSquareClick"></button>
+</template>
 
 <script>
 export default {
     name: "Square",
+    props: {
+        color: String,
+        isActive: Boolean,
+        onSquareClick: Function,
+    },
+    methods: {
+        getDynamicClass() {
+            return {
+                [`square--${this.color}`]: this.color,
+                "square--active": this.isActive,
+            };
+        },
+    },
 };
 </script>
 

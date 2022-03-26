@@ -1,0 +1,61 @@
+<template>
+    <div class="menu">
+        <div>
+            <h2>Раунд: {{ isGameStarted ? round : "-" }}</h2>
+            <button class="menu__input" :disabled="isGameStarted" v-on:click="onStartButtonClick">Начать</button>
+        </div>
+        <div>
+            <h2>Сложность:</h2>
+            <select class="menu__input" :disabled="isGameStarted" :value="difficulty" v-on:change="onSelectChange">
+                <option value="easy">Легкая</option>
+                <option value="medium">Нормальная</option>
+                <option value="hard">Сложная</option>
+            </select>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "Menu",
+    props: {
+        isGameStarted: Boolean,
+        round: Number,
+        difficulty: String,
+        onSelectChange: Function,
+        onStartButtonClick: Function,
+    },
+};
+</script>
+
+<style scoped>
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu__input {
+    font: inherit;
+
+    min-width: 7rem;
+
+    padding: 0.5rem;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    box-shadow: var(--primary-box-shadow);
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: 0.25s box-shadow;
+}
+
+.menu__input:hover,
+.menu__input:focus-visible {
+    box-shadow: var(--primary-box-shadow--hovered);
+}
+</style>
