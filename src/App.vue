@@ -6,12 +6,28 @@
         <div class="playground">
             <div class="button-set">
                 <div class="button-row">
-                    <Square color="green" :isActive="squares.green.isActive" :onSquareClick="onSquareClick" />
-                    <Square color="red" :isActive="squares.red.isActive" :onSquareClick="onSquareClick" />
+                    <ColorButton
+                        color="green"
+                        :isActive="colorButtons.green.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
+                    <ColorButton
+                        color="red"
+                        :isActive="colorButtons.red.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
                 </div>
                 <div class="button-row">
-                    <Square color="yellow" :isActive="squares.yellow.isActive" :onSquareClick="onSquareClick" />
-                    <Square color="blue" :isActive="squares.blue.isActive" :onSquareClick="onSquareClick" />
+                    <ColorButton
+                        color="yellow"
+                        :isActive="colorButtons.yellow.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
+                    <ColorButton
+                        color="blue"
+                        :isActive="colorButtons.blue.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
                 </div>
             </div>
 
@@ -27,12 +43,12 @@
 </template>
 
 <script>
-import Square from "./components/Square.vue";
+import ColorButton from "./components/ColorButton.vue";
 import Menu from "./components/Menu.vue";
 
 export default {
     name: "App",
-    components: { Square, Menu },
+    components: { ColorButton, Menu },
     data() {
         return {
             round: 1,
@@ -42,7 +58,7 @@ export default {
             isWaitingForAnswer: false,
             rightAnswers: [],
             currentRightAnswerIndex: 0,
-            squares: {
+            colorButtons: {
                 green: { name: "green", isActive: false },
                 red: { name: "red", isActive: false },
                 yellow: { name: "yellow", isActive: false },
@@ -54,7 +70,7 @@ export default {
         onSelectChange(e) {
             this.difficulty = e.target.value;
         },
-        onSquareClick(e) {
+        onColorButtonClick(e) {
             if (!this.isWaitingForAnswer) {
                 return;
             }
@@ -76,23 +92,23 @@ export default {
             const rand = min + Math.random() * (max + 1 - min);
             return Math.floor(rand);
         },
-        getRandomSquare() {
-            const randomSquaresKey = Object.entries(this.squares)[this.getRandomInt(0, 3)][0];
-            return this.squares[randomSquaresKey];
+        getRandomColorButton() {
+            const randomColorButtonsKey = Object.entries(this.colorButtons)[this.getRandomInt(0, 3)][0];
+            return this.colorButtons[randomColorButtonsKey];
         },
-        playSound(squareName) {
-            new Audio(`sounds/${squareName}.mp3`).play();
+        playSound(colorButtonName) {
+            new Audio(`sounds/${colorButtonName}.mp3`).play();
         },
         async playRound() {
             this.isWaitingForAnswer = false;
 
-            for (const square of this.rightAnswers) {
-                square.isActive = true;
-                this.playSound(square.name);
+            for (const colorButton of this.rightAnswers) {
+                colorButton.isActive = true;
+                this.playSound(colorButton.name);
 
                 await new Promise((resolve) =>
                     setTimeout(() => {
-                        square.isActive = false;
+                        colorButton.isActive = false;
                         resolve();
                     }, this.difficultyDelay[this.difficulty] - 100)
                 );
@@ -106,13 +122,13 @@ export default {
 
             this.isWaitingForAnswer = true;
         },
-        addNextSquare() {
-            const randomSquare = this.getRandomSquare();
-            this.rightAnswers.push(randomSquare);
+        addNextColorButton() {
+            const randomColorButton = this.getRandomColorButton();
+            this.rightAnswers.push(randomColorButton);
         },
         startTheGame() {
             this.isGameStarted = true;
-            this.addNextSquare();
+            this.addNextColorButton();
             this.playRound();
         },
         onStartButtonClick() {
@@ -139,7 +155,7 @@ export default {
             this.round++;
             this.currentRightAnswerIndex = 0;
 
-            this.addNextSquare();
+            this.addNextColorButton();
             this.playRound();
         },
     },

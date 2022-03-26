@@ -1,20 +1,20 @@
 <template>
-    <button class="square" :class="getDynamicClass()" :value="color" v-on:click="onSquareClick"></button>
+    <button class="color-button" :class="getDynamicClass()" :value="color" v-on:click="onColorButtonClick"></button>
 </template>
 
 <script>
 export default {
-    name: "Square",
+    name: "ColorButton",
     props: {
         color: String,
         isActive: Boolean,
-        onSquareClick: Function,
+        onColorButtonClick: Function,
     },
     methods: {
         getDynamicClass() {
             return {
-                [`square--${this.color}`]: this.color,
-                "square--active": this.isActive,
+                [`color-button--${this.color}`]: this.color,
+                "color-button--active": this.isActive,
             };
         },
     },
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-.square {
+.color-button {
     width: 7rem;
     height: 7rem;
 
@@ -37,33 +37,33 @@ export default {
     transition: 0.25s opacity, 0.25s box-shadow;
 }
 
-.square:hover,
-.square--active {
+.color-button:hover,
+.color-button--active {
     box-shadow: var(--primary-box-shadow--hovered);
     opacity: 1;
 }
 
-.square:active {
+.color-button:active {
     box-shadow: var(--primary-box-shadow);
     opacity: 0.4;
 }
 
-.square--green {
+.color-button--green {
     border-top-left-radius: 100%;
     background-color: green;
 }
 
-.square--red {
+.color-button--red {
     border-top-right-radius: 100%;
     background-color: red;
 }
 
-.square--yellow {
+.color-button--yellow {
     border-bottom-left-radius: 100%;
     background-color: yellow;
 }
 
-.square--blue {
+.color-button--blue {
     border-bottom-right-radius: 100%;
     background-color: blue;
 }
