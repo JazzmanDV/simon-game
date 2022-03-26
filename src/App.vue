@@ -1,23 +1,28 @@
 <template>
     <div class="app">
-        <div class="button-set">
-            <div class="button-row">
-                <Square color="green" :isActive="squares.green.isActive" :onSquareClick="onSquareClick" />
-                <Square color="red" :isActive="squares.red.isActive" :onSquareClick="onSquareClick" />
+        <h2 class="your-turn-hint" :class="{ 'your-turn-hint--visible': isWaitingForAnswer }">
+            Ваша очередь нажимать :)
+        </h2>
+        <div class="playground">
+            <div class="button-set">
+                <div class="button-row">
+                    <Square color="green" :isActive="squares.green.isActive" :onSquareClick="onSquareClick" />
+                    <Square color="red" :isActive="squares.red.isActive" :onSquareClick="onSquareClick" />
+                </div>
+                <div class="button-row">
+                    <Square color="yellow" :isActive="squares.yellow.isActive" :onSquareClick="onSquareClick" />
+                    <Square color="blue" :isActive="squares.blue.isActive" :onSquareClick="onSquareClick" />
+                </div>
             </div>
-            <div class="button-row">
-                <Square color="yellow" :isActive="squares.yellow.isActive" :onSquareClick="onSquareClick" />
-                <Square color="blue" :isActive="squares.blue.isActive" :onSquareClick="onSquareClick" />
-            </div>
-        </div>
 
-        <Menu
-            :isGameStarted="isGameStarted"
-            :round="round"
-            :onStartButtonClick="onStartButtonClick"
-            :difficulty="difficulty"
-            :onSelectChange="onSelectChange"
-        />
+            <Menu
+                :isGameStarted="isGameStarted"
+                :round="round"
+                :onStartButtonClick="onStartButtonClick"
+                :difficulty="difficulty"
+                :onSelectChange="onSelectChange"
+            />
+        </div>
     </div>
 </template>
 
@@ -161,19 +166,25 @@ body {
 <style scoped>
 .app {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 
     box-sizing: border-box;
 
     max-width: 60rem;
 
-    margin-top: 4rem;
     margin-left: auto;
     margin-right: auto;
 
     padding: 1rem;
+}
+
+.playground {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5rem;
 }
 
 .button-set {
@@ -187,5 +198,14 @@ body {
 .button-row {
     display: flex;
     gap: 0.5rem;
+}
+
+.your-turn-hint {
+    opacity: 0;
+    transition: 0.25s opacity;
+}
+
+.your-turn-hint--visible {
+    opacity: 1;
 }
 </style>
