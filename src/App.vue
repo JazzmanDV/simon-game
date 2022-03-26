@@ -89,7 +89,13 @@ export default {
                     setTimeout(() => {
                         square.isActive = false;
                         resolve();
-                    }, this.difficultyDelay[this.difficulty])
+                    }, this.difficultyDelay[this.difficulty] - 100)
+                );
+
+                await new Promise((resolve) =>
+                    setTimeout(() => {
+                        resolve();
+                    }, 100)
                 );
             }
 

@@ -33,6 +33,8 @@ export default {
     opacity: 0.4;
 
     cursor: pointer;
+
+    transition: 0.25s opacity, 0.25s box-shadow;
 }
 
 .square:hover,
