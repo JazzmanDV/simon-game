@@ -45,6 +45,8 @@ export default {
     border: none;
     border-radius: 0.5rem;
 
+    background-color: white;
+
     box-shadow: var(--primary-box-shadow);
 
     outline: none;
