@@ -47,12 +47,14 @@ export default {
     data() {
         return {
             round: 1,
-            difficulty: "easy",
-            difficultyDelay: { easy: 1500, medium: 1000, hard: 400 },
             isGameStarted: false,
             isWaitingForAnswer: false,
             rightAnswers: [],
             currentRightAnswerIndex: 0,
+
+            difficulty: "easy",
+            difficultyDelay: { easy: 1500, medium: 1000, hard: 400 },
+
             colorButtons: {
                 green: { name: "green", isActive: false },
                 red: { name: "red", isActive: false },
@@ -64,6 +66,9 @@ export default {
     methods: {
         onSelectChange(e) {
             this.difficulty = e.target.value;
+        },
+        onStartButtonClick() {
+            this.startTheGame();
         },
         onColorButtonClick(e) {
             if (!this.isWaitingForAnswer) {
@@ -83,6 +88,7 @@ export default {
                 this.goNextRound();
             }
         },
+
         getRandomInt(min, max) {
             const rand = min + Math.random() * (max + 1 - min);
             return Math.floor(rand);
@@ -91,6 +97,19 @@ export default {
             const randomColorButtonsKey = Object.entries(this.colorButtons)[this.getRandomInt(0, 3)][0];
             return this.colorButtons[randomColorButtonsKey];
         },
+        delay(callback, ms) {
+            return new Promise((resolve) =>
+                setTimeout(() => {
+                    callback();
+                    resolve();
+                }, ms)
+            );
+        },
+
+        addNextColorButton() {
+            const randomColorButton = this.getRandomColorButton();
+            this.rightAnswers.push(randomColorButton);
+        },
         playSound(colorButtonName) {
             new Audio(`sounds/${colorButtonName}.mp3`).play();
         },
@@ -98,36 +117,32 @@ export default {
             this.isWaitingForAnswer = false;
 
             for (const colorButton of this.rightAnswers) {
-                colorButton.isActive = true;
                 this.playSound(colorButton.name);
+                colorButton.isActive = true;
 
-                await new Promise((resolve) =>
-                    setTimeout(() => {
-                        colorButton.isActive = false;
-                        resolve();
-                    }, this.difficultyDelay[this.difficulty] - 100)
-                );
+                await this.delay(() => {
+                    colorButton.isActive = false;
+                }, this.difficultyDelay[this.difficulty] - 100);
 
-                await new Promise((resolve) =>
-                    setTimeout(() => {
-                        resolve();
-                    }, 100)
-                );
+                await this.delay(() => {}, 100);
             }
 
             this.isWaitingForAnswer = true;
         },
-        addNextColorButton() {
-            const randomColorButton = this.getRandomColorButton();
-            this.rightAnswers.push(randomColorButton);
+        async goNextRound() {
+            await this.delay(() => {}, 800);
+
+            this.round++;
+            this.currentRightAnswerIndex = 0;
+
+            this.addNextColorButton();
+            this.playRound();
         },
+
         startTheGame() {
             this.isGameStarted = true;
             this.addNextColorButton();
             this.playRound();
-        },
-        onStartButtonClick() {
-            this.startTheGame();
         },
         restartTheGame() {
             this.round = 1;
@@ -139,19 +154,6 @@ export default {
         loseTheGame() {
             alert(`Вы проиграли! Пройдено раундов: ${this.round - 1}`);
             this.restartTheGame();
-        },
-        async goNextRound() {
-            await new Promise((resolve) =>
-                setTimeout(() => {
-                    resolve();
-                }, 800)
-            );
-
-            this.round++;
-            this.currentRightAnswerIndex = 0;
-
-            this.addNextColorButton();
-            this.playRound();
         },
     },
 };
