@@ -28,7 +28,7 @@ export default {
 
     border: none;
 
-    box-shadow: var(--primary-box-shadow);
+    box-shadow: var(--primary-box-shadow--hovered);
 
     opacity: 0.4;
 
@@ -37,20 +37,47 @@ export default {
     transition: 0.25s opacity, 0.25s box-shadow;
 }
 
-.color-button:hover,
+.color-button:active,
 .color-button--active {
-    box-shadow: var(--primary-box-shadow--hovered);
     opacity: 1;
 }
 
-.color-button:active {
-    box-shadow: var(--primary-box-shadow);
-    opacity: 0.4;
+/* Перезаписываем стили для девайсов с мышкой */
+@media (hover: hover) and (pointer: fine) {
+    .color-button--green:hover {
+        border-top: var(--primary-border);
+        border-left: var(--primary-border);
+    }
+
+    .color-button--red:hover {
+        border-top: var(--primary-border);
+        border-right: var(--primary-border);
+    }
+
+    .color-button--yellow:hover {
+        border-bottom: var(--primary-border);
+        border-left: var(--primary-border);
+    }
+
+    .color-button--blue:hover {
+        border-bottom: var(--primary-border);
+        border-right: var(--primary-border);
+    }
+
+    /* .color-button:hover {
+        box-shadow: var(--primary-box-shadow--hovered);
+        opacity: 1;
+    }
+
+    .color-button:active {
+        box-shadow: var(--primary-box-shadow);
+        opacity: 0.4;
+    } */
 }
 
 .color-button--green {
     border-top-left-radius: 100%;
-    background-color: green;
+    background-color: rgb(0, 173, 0);
 }
 
 .color-button--red {
@@ -65,6 +92,6 @@ export default {
 
 .color-button--blue {
     border-bottom-right-radius: 100%;
-    background-color: blue;
+    background-color: rgb(0, 110, 255);
 }
 </style>

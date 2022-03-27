@@ -192,10 +192,8 @@ export default {
     -moz-osx-font-smoothing: grayscale;
 
     --primary-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    --primary-box-shadow--hovered: 0 0 12px rgba(0, 0, 0, 0.2);
-
-    --error-box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    --error-box-shadow--hovered: 0 0 12px rgba(255, 0, 0, 0.5);
+    --primary-box-shadow--hovered: 0 0 12px rgba(0, 0, 0, 0.3);
+    --primary-border: 2px solid black;
 }
 
 body {

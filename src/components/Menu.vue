@@ -45,11 +45,11 @@ export default {
     border: none;
     border-radius: 0.5rem;
 
+    outline: none;
+
     background-color: white;
 
     box-shadow: var(--primary-box-shadow);
-
-    outline: none;
 
     cursor: pointer;
 
