@@ -135,10 +135,12 @@ export default {
             this.isWaitingForAnswer = true;
         },
         async goNextRound() {
-            await this.delay(() => {}, 800);
-
             this.round++;
             this.currentRightAnswerIndex = 0;
+
+            this.isWaitingForAnswer = false;
+
+            await this.delay(() => {}, 800);
 
             this.addNextColorButton();
             this.playRound();
@@ -158,10 +160,13 @@ export default {
         },
         loseTheGame() {
             this.playSound("error.wav");
+
+            this.isWaitingForAnswer = false;
+
             setTimeout(() => {
                 alert(`Вы проиграли! Пройдено раундов: ${this.round - 1}`);
                 this.restartTheGame();
-            }, 30);
+            }, 50);
         },
     },
 };
