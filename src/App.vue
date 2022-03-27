@@ -3,6 +3,7 @@
         <h2 class="you-lost-message" :class="{ 'you-lost-message--visible': lastCompletedRound !== null }">
             Вы проиграли! Пройдено раундов: {{ lastCompletedRound }}
         </h2>
+
         <div class="playing-field">
             <div class="button-set">
                 <div class="button-row">
@@ -66,6 +67,14 @@ export default {
                 red: { name: "red", isActive: false },
                 yellow: { name: "yellow", isActive: false },
                 blue: { name: "blue", isActive: false },
+            },
+
+            sounds: {
+                green: new Audio("sounds/green.mp3"),
+                red: new Audio("sounds/red.mp3"),
+                yellow: new Audio("sounds/yellow.mp3"),
+                blue: new Audio("sounds/blue.mp3"),
+                error: new Audio("sounds/error.wav"),
             },
         };
     },
