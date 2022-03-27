@@ -71,6 +71,11 @@ export default {
             this.startTheGame();
         },
         onColorButtonClick(e) {
+            if (!this.isGameStarted) {
+                this.playSound(e.target.value + ".mp3");
+                return;
+            }
+
             if (!this.isWaitingForAnswer) {
                 return;
             }
@@ -80,7 +85,7 @@ export default {
                 return;
             }
 
-            this.playSound(e.target.value);
+            this.playSound(e.target.value + ".mp3");
 
             this.currentRightAnswerIndex++;
 
@@ -110,14 +115,14 @@ export default {
             const randomColorButton = this.getRandomColorButton();
             this.rightAnswers.push(randomColorButton);
         },
-        playSound(colorButtonName) {
-            new Audio(`sounds/${colorButtonName}.mp3`).play();
+        playSound(sound) {
+            new Audio(`sounds/${sound}`).play();
         },
         async playRound() {
             this.isWaitingForAnswer = false;
 
             for (const colorButton of this.rightAnswers) {
-                this.playSound(colorButton.name);
+                this.playSound(colorButton.name + ".mp3");
                 colorButton.isActive = true;
 
                 await this.delay(() => {
@@ -152,8 +157,11 @@ export default {
             this.currentRightAnswerIndex = 0;
         },
         loseTheGame() {
-            alert(`Вы проиграли! Пройдено раундов: ${this.round - 1}`);
-            this.restartTheGame();
+            this.playSound("error.wav");
+            setTimeout(() => {
+                alert(`Вы проиграли! Пройдено раундов: ${this.round - 1}`);
+                this.restartTheGame();
+            }, 30);
         },
     },
 };
