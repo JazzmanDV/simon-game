@@ -50,6 +50,7 @@ import Menu from "./components/Menu.vue";
 export default {
     name: "App",
     components: { ColorButton, Menu },
+
     data() {
         return {
             round: 1,
@@ -78,6 +79,7 @@ export default {
             },
         };
     },
+
     methods: {
         onSelectChange(e) {
             this.difficulty = e.target.value;
@@ -87,7 +89,7 @@ export default {
         },
         onColorButtonClick(e) {
             if (!this.isGameStarted) {
-                this.playSound(e.target.value + ".mp3");
+                this.playSound(this.sounds[e.target.value]);
                 return;
             }
 
@@ -100,7 +102,7 @@ export default {
                 return;
             }
 
-            this.playSound(e.target.value + ".mp3");
+            this.playSound(this.sounds[e.target.value]);
 
             this.currentRightAnswerIndex++;
 
@@ -131,13 +133,13 @@ export default {
             this.rightAnswers.push(randomColorButton);
         },
         playSound(sound) {
-            new Audio(`sounds/${sound}`).play();
+            new Audio(sound.src).play();
         },
         async playRound() {
             this.isWaitingForAnswer = false;
 
             for (const colorButton of this.rightAnswers) {
-                this.playSound(colorButton.name + ".mp3");
+                this.playSound(this.sounds[colorButton.name]);
                 colorButton.isActive = true;
 
                 await this.delay(() => {
@@ -176,7 +178,7 @@ export default {
         },
         loseTheGame() {
             this.lastCompletedRound = this.round - 1;
-            this.playSound("error.wav");
+            this.playSound(this.sounds.error);
             this.restartTheGame();
         },
     },
