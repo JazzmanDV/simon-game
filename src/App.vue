@@ -1,39 +1,44 @@
 <template>
     <div class="app">
-        <div class="button-set">
-            <div class="button-row">
-                <ColorButton
-                    color="green"
-                    :isActive="colorButtons.green.isActive"
-                    :onColorButtonClick="onColorButtonClick"
-                />
-                <ColorButton
-                    color="red"
-                    :isActive="colorButtons.red.isActive"
-                    :onColorButtonClick="onColorButtonClick"
-                />
+        <h2 class="you-lost-message" :class="{ 'you-lost-message--visible': lastCompletedRound !== null }">
+            Вы проиграли! Пройдено раундов: {{ lastCompletedRound }}
+        </h2>
+        <div class="playing-field">
+            <div class="button-set">
+                <div class="button-row">
+                    <ColorButton
+                        color="green"
+                        :isActive="colorButtons.green.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
+                    <ColorButton
+                        color="red"
+                        :isActive="colorButtons.red.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
+                </div>
+                <div class="button-row">
+                    <ColorButton
+                        color="yellow"
+                        :isActive="colorButtons.yellow.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
+                    <ColorButton
+                        color="blue"
+                        :isActive="colorButtons.blue.isActive"
+                        :onColorButtonClick="onColorButtonClick"
+                    />
+                </div>
             </div>
-            <div class="button-row">
-                <ColorButton
-                    color="yellow"
-                    :isActive="colorButtons.yellow.isActive"
-                    :onColorButtonClick="onColorButtonClick"
-                />
-                <ColorButton
-                    color="blue"
-                    :isActive="colorButtons.blue.isActive"
-                    :onColorButtonClick="onColorButtonClick"
-                />
-            </div>
-        </div>
 
-        <Menu
-            :isGameStarted="isGameStarted"
-            :round="round"
-            :onStartButtonClick="onStartButtonClick"
-            :difficulty="difficulty"
-            :onSelectChange="onSelectChange"
-        />
+            <Menu
+                :isGameStarted="isGameStarted"
+                :round="round"
+                :onStartButtonClick="onStartButtonClick"
+                :difficulty="difficulty"
+                :onSelectChange="onSelectChange"
+            />
+        </div>
     </div>
 </template>
 
@@ -47,6 +52,7 @@ export default {
     data() {
         return {
             round: 1,
+            lastCompletedRound: null,
             isGameStarted: false,
             isWaitingForAnswer: false,
             rightAnswers: [],
@@ -147,6 +153,7 @@ export default {
         },
 
         startTheGame() {
+            this.lastCompletedRound = null;
             this.isGameStarted = true;
             this.addNextColorButton();
             this.playRound();
@@ -159,14 +166,9 @@ export default {
             this.currentRightAnswerIndex = 0;
         },
         loseTheGame() {
+            this.lastCompletedRound = this.round - 1;
             this.playSound("error.wav");
-
-            this.isWaitingForAnswer = false;
-
-            setTimeout(() => {
-                alert(`Вы проиграли! Пройдено раундов: ${this.round - 1}`);
-                this.restartTheGame();
-            }, 50);
+            this.restartTheGame();
         },
     },
 };
@@ -197,18 +199,37 @@ h2 {
 <style scoped>
 .app {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 5rem;
+    align-items: center;
+    gap: 2rem;
 
     box-sizing: border-box;
 
-    max-width: 60rem;
+    max-width: 70rem;
 
-    margin-top: 5rem;
     margin-left: auto;
     margin-right: auto;
 
     padding: 1rem;
+}
+
+.playing-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5rem;
+}
+
+.you-lost-message {
+    text-align: center;
+    opacity: 0;
+    transition: 0.25s opacity;
+}
+
+.you-lost-message--visible {
+    opacity: 1;
 }
 
 .button-set {
