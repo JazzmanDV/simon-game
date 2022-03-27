@@ -175,9 +175,14 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;600&display=swap");
+
 :root {
     font-family: "Exo 2", sans-serif;
     font-weight: 300;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
     --primary-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     --primary-box-shadow--hovered: 0 0 12px rgba(0, 0, 0, 0.2);
@@ -191,6 +196,8 @@ body {
 }
 
 h2 {
+    font-weight: 600;
+
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
 }
