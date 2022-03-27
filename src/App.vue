@@ -1,44 +1,39 @@
 <template>
     <div class="app">
-        <h2 class="your-turn-hint" :class="{ 'your-turn-hint--visible': isWaitingForAnswer }">
-            Ваша очередь нажимать :)
-        </h2>
-        <div class="playground">
-            <div class="button-set">
-                <div class="button-row">
-                    <ColorButton
-                        color="green"
-                        :isActive="colorButtons.green.isActive"
-                        :onColorButtonClick="onColorButtonClick"
-                    />
-                    <ColorButton
-                        color="red"
-                        :isActive="colorButtons.red.isActive"
-                        :onColorButtonClick="onColorButtonClick"
-                    />
-                </div>
-                <div class="button-row">
-                    <ColorButton
-                        color="yellow"
-                        :isActive="colorButtons.yellow.isActive"
-                        :onColorButtonClick="onColorButtonClick"
-                    />
-                    <ColorButton
-                        color="blue"
-                        :isActive="colorButtons.blue.isActive"
-                        :onColorButtonClick="onColorButtonClick"
-                    />
-                </div>
+        <div class="button-set">
+            <div class="button-row">
+                <ColorButton
+                    color="green"
+                    :isActive="colorButtons.green.isActive"
+                    :onColorButtonClick="onColorButtonClick"
+                />
+                <ColorButton
+                    color="red"
+                    :isActive="colorButtons.red.isActive"
+                    :onColorButtonClick="onColorButtonClick"
+                />
             </div>
-
-            <Menu
-                :isGameStarted="isGameStarted"
-                :round="round"
-                :onStartButtonClick="onStartButtonClick"
-                :difficulty="difficulty"
-                :onSelectChange="onSelectChange"
-            />
+            <div class="button-row">
+                <ColorButton
+                    color="yellow"
+                    :isActive="colorButtons.yellow.isActive"
+                    :onColorButtonClick="onColorButtonClick"
+                />
+                <ColorButton
+                    color="blue"
+                    :isActive="colorButtons.blue.isActive"
+                    :onColorButtonClick="onColorButtonClick"
+                />
+            </div>
         </div>
+
+        <Menu
+            :isGameStarted="isGameStarted"
+            :round="round"
+            :onStartButtonClick="onStartButtonClick"
+            :difficulty="difficulty"
+            :onSelectChange="onSelectChange"
+        />
     </div>
 </template>
 
@@ -177,30 +172,28 @@ export default {
 body {
     margin: 0;
 }
+
+h2 {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
 </style>
 
 <style scoped>
 .app {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    justify-content: center;
+    gap: 5rem;
 
     box-sizing: border-box;
 
     max-width: 60rem;
 
+    margin-top: 5rem;
     margin-left: auto;
     margin-right: auto;
 
     padding: 1rem;
-}
-
-.playground {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5rem;
 }
 
 .button-set {
@@ -214,14 +207,5 @@ body {
 .button-row {
     display: flex;
     gap: 0.5rem;
-}
-
-.your-turn-hint {
-    opacity: 0;
-    transition: 0.25s opacity;
-}
-
-.your-turn-hint--visible {
-    opacity: 1;
 }
 </style>
