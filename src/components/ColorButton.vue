@@ -1,5 +1,5 @@
 <template>
-    <button class="color-button" :class="getDynamicClass()" :value="color" v-on:click="onColorButtonClick"></button>
+    <button class="color-button" :class="getDynamicClass()" :value="color" @click="onColorButtonClick"></button>
 </template>
 
 <script>
@@ -63,16 +63,6 @@ export default {
         border-bottom: var(--primary-border);
         border-right: var(--primary-border);
     }
-
-    /* .color-button:hover {
-        box-shadow: var(--primary-box-shadow--hovered);
-        opacity: 1;
-    }
-
-    .color-button:active {
-        box-shadow: var(--primary-box-shadow);
-        opacity: 0.4;
-    } */
 }
 
 .color-button--green {

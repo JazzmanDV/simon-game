@@ -37,7 +37,7 @@
                 :round="round"
                 :onStartButtonClick="onStartButtonClick"
                 :difficulty="difficulty"
-                :onSelectChange="onSelectChange"
+                @selectChange="onSelectChange"
             />
         </div>
     </div>
@@ -81,8 +81,8 @@ export default {
     },
 
     methods: {
-        onSelectChange(e) {
-            this.difficulty = e.target.value;
+        onSelectChange(value) {
+            this.difficulty = value;
         },
         onStartButtonClick() {
             this.startTheGame();
