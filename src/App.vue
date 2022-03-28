@@ -186,16 +186,14 @@ export default {
 </script>
 
 <style>
+@import "./variables.css";
+
 :root {
     font-family: "Exo 2", sans-serif;
     font-weight: 300;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    --primary-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    --primary-box-shadow--hovered: 0 0 12px rgba(0, 0, 0, 0.3);
-    --primary-border: 2px solid black;
 }
 
 body {
