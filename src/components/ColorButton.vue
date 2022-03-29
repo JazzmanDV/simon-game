@@ -6,8 +6,8 @@
 export default {
     name: "ColorButton",
     props: {
-        color: String,
-        isActive: Boolean,
+        color: { type: String, required: true },
+        isActive: { type: Boolean, required: true },
     },
     methods: {
         handleColorButtonClick(e) {

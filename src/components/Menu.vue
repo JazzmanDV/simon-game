@@ -19,9 +19,9 @@
 export default {
     name: "Menu",
     props: {
-        isGameStarted: Boolean,
-        round: Number,
-        difficulty: String,
+        isGameStarted: { type: Boolean, required: true },
+        round: { type: Number, required: true },
+        difficulty: { type: String, required: true },
     },
     methods: {
         handleStartButtonClick() {
