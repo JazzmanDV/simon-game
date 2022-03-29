@@ -1,5 +1,5 @@
 <template>
-    <button class="color-button" :class="getDynamicClass()" :value="color" @click="onColorButtonClick"></button>
+    <button class="color-button" :class="getDynamicClass()" :value="color" @click="handleColorButtonClick"></button>
 </template>
 
 <script>
@@ -8,9 +8,11 @@ export default {
     props: {
         color: String,
         isActive: Boolean,
-        onColorButtonClick: Function,
     },
     methods: {
+        handleColorButtonClick(e) {
+            this.$emit("on-color-button-click", e.target.value);
+        },
         getDynamicClass() {
             return {
                 [`color-button--${this.color}`]: this.color,

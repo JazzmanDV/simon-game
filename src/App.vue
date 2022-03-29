@@ -10,24 +10,24 @@
                     <ColorButton
                         color="green"
                         :isActive="colorButtons.green.isActive"
-                        :onColorButtonClick="onColorButtonClick"
+                        @on-color-button-click="handleColorButtonClick"
                     />
                     <ColorButton
                         color="red"
                         :isActive="colorButtons.red.isActive"
-                        :onColorButtonClick="onColorButtonClick"
+                        @on-color-button-click="handleColorButtonClick"
                     />
                 </div>
                 <div class="button-row">
                     <ColorButton
                         color="yellow"
                         :isActive="colorButtons.yellow.isActive"
-                        :onColorButtonClick="onColorButtonClick"
+                        @on-color-button-click="handleColorButtonClick"
                     />
                     <ColorButton
                         color="blue"
                         :isActive="colorButtons.blue.isActive"
-                        :onColorButtonClick="onColorButtonClick"
+                        @on-color-button-click="handleColorButtonClick"
                     />
                 </div>
             </div>
@@ -35,9 +35,9 @@
             <Menu
                 :isGameStarted="isGameStarted"
                 :round="round"
-                :onStartButtonClick="onStartButtonClick"
                 :difficulty="difficulty"
-                @selectChange="onSelectChange"
+                @on-start-button-click="handleStartButtonClick"
+                @on-select-change="handleSelectChange"
             />
         </div>
     </div>
@@ -81,15 +81,15 @@ export default {
     },
 
     methods: {
-        onSelectChange(value) {
-            this.difficulty = value;
-        },
-        onStartButtonClick() {
+        handleStartButtonClick() {
             this.startTheGame();
         },
-        onColorButtonClick(e) {
+        handleSelectChange(value) {
+            this.difficulty = value;
+        },
+        handleColorButtonClick(value) {
             if (!this.isGameStarted) {
-                this.playSound(this.sounds[e.target.value]);
+                this.playSound(this.sounds[value]);
                 return;
             }
 
@@ -97,12 +97,12 @@ export default {
                 return;
             }
 
-            if (e.target.value !== this.rightAnswers[this.currentRightAnswerIndex].name) {
+            if (value !== this.rightAnswers[this.currentRightAnswerIndex].name) {
                 this.loseTheGame();
                 return;
             }
 
-            this.playSound(this.sounds[e.target.value]);
+            this.playSound(this.sounds[value]);
 
             this.currentRightAnswerIndex++;
 

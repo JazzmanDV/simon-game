@@ -2,11 +2,11 @@
     <div class="menu">
         <div>
             <h2>Раунд: {{ isGameStarted ? round : "-" }}</h2>
-            <button class="menu__input" :disabled="isGameStarted" @click="onStartButtonClick">Начать</button>
+            <button class="menu__input" :disabled="isGameStarted" @click="handleStartButtonClick">Начать</button>
         </div>
         <div>
             <h2>Сложность:</h2>
-            <select class="menu__input" :disabled="isGameStarted" :value="difficulty" @change="onSelectChange">
+            <select class="menu__input" :disabled="isGameStarted" :value="difficulty" @change="handleSelectChange">
                 <option value="easy">Легкая</option>
                 <option value="medium">Нормальная</option>
                 <option value="hard">Сложная</option>
@@ -22,11 +22,13 @@ export default {
         isGameStarted: Boolean,
         round: Number,
         difficulty: String,
-        onStartButtonClick: Function,
     },
     methods: {
-        onSelectChange(e) {
-            this.$emit("selectChange", e.target.value);
+        handleStartButtonClick() {
+            this.$emit("on-start-button-click");
+        },
+        handleSelectChange(e) {
+            this.$emit("on-select-change", e.target.value);
         },
     },
 };
