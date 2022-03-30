@@ -1,5 +1,5 @@
 <template>
-    <button class="color-button" :class="getDynamicClass()" :value="color" @click="handleColorButtonClick"></button>
+    <button class="color-button" :class="dynamicClasses" :value="color" @click="handleColorButtonClick"></button>
 </template>
 
 <script>
@@ -9,15 +9,17 @@ export default {
         color: { type: String, required: true },
         isActive: { type: Boolean, required: true },
     },
-    methods: {
-        handleColorButtonClick(e) {
-            this.$emit("on-color-button-click", e.target.value);
-        },
-        getDynamicClass() {
+    computed: {
+        dynamicClasses() {
             return {
                 [`color-button--${this.color}`]: this.color,
                 "color-button--active": this.isActive,
             };
+        },
+    },
+    methods: {
+        handleColorButtonClick(e) {
+            this.$emit("on-color-button-click", e.target.value);
         },
     },
 };
